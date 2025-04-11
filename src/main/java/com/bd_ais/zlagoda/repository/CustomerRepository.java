@@ -1,9 +1,13 @@
 package com.bd_ais.zlagoda.repository;
 
-import com.bd_ais.zlagoda.model.Customer;
+import com.bd_ais.zlagoda.model.CustomerEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface CustomerRepository  extends JpaRepository<Customer, Long> {
-}
+import java.util.List;
+
+/*@Repository
+public interface CustomerRepository  extends JpaRepository<CustomerEntity, Long> {
+
+}*/

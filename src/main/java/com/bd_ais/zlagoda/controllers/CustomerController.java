@@ -19,7 +19,7 @@ public class CustomerController {
 
     @GetMapping
     public String showListCustomers(Model model) {
-        model.addAttribute("customers", customerService.findAll());
+        model.addAttribute("customers", customerService.getAllCustomers());
         return "customer/customers";
     }
 

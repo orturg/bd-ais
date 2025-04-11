@@ -4,34 +4,21 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
-@MappedSuperclass
+
 public abstract class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, updatable = false)
     private Long id;
-
-    @Column(name = "name", nullable = false)
     private String name;
-
-    @Column(name = "surname", nullable = false)
     private String surname;
-
-    @Column(name = "patronymic", nullable = false)
     private String patronymic;
-
-    @Column(name = "phone_number", nullable = false)
     private String phone_number;
-
-    @Column(name = "city", nullable = false)
     private String city;
-
-    @Column(name = "street", nullable = false)
     private String street;
-    @Column(name = "zip_code", nullable = false)
     private String zip_code;
 
-    public User(Long id, String name, String surname, String patronymic, String phone_number, String city, String street, String zip_code) {
+    private String email;
+    private String password;
+
+    public User(Long id, String name, String surname, String patronymic, String phone_number, String city, String street, String zip_code, String email, String password) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -40,6 +27,8 @@ public abstract class User {
         this.city = city;
         this.street = street;
         this.zip_code = zip_code;
+        this.email = email;
+        this.password = password;
     }
 
     public User() {
@@ -107,5 +96,21 @@ public abstract class User {
 
     public void setZip_code(String zip_code) {
         this.zip_code = zip_code;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
