@@ -7,9 +7,31 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class CustomerDaoImpl implements CustomerDao {
+
+    private final String SAVE_CUSTOMER = "INSERT INTO customers " +
+                                            "SET name = ?, surname = ?, patronymic = ?, " +
+                                                "phone_number = ?, city = ?, street = ?, " +
+                                                "zip_code = ?, email = ?, password = ?, " +
+                                                "percent = ? " +
+                                            " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private final String UPDATE_CUSTOMER = "UPDATE customers SET " +
+                                                "name = ?, surname = ?, patronymic = ?, " +
+                                                "phone_number = ?, city = ?, street = ?, " +
+                                                "zip_code = ?, email = ?, password = ?, " +
+                                                "percent = ? " +
+                                            "WHERE id = ?";
+    private final String DELETE_CUSTOMER = "DELETE FROM customers WHERE id = ?";
+
+
+    private final String FIND_BY_ID_SQL = "SELECT * FROM customers WHERE id = ?";
+    private final String FIND_ALL_CUSTOMERS = "SELECT * FROM customers";
+    private final String FIND_CUSTOMER_BY_NAME = "SELECT * FROM customers WHERE name = ?";
+    private final String FIND_CUSTOMER_BY_SURNAME = "SELECT * FROM customers WHERE surname = ?";
+    private final String FIND_CUSTOMER_BY_EMAIL = "SELECT * FROM customers WHERE email = ?";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -32,32 +54,68 @@ public class CustomerDaoImpl implements CustomerDao {
     );
 
     @Override
-    public void save(CustomerEntity customer) {
-        String sql = "INSERT INTO customers (name, email) VALUES (?, ?)";
-        jdbcTemplate.update(sql, customer.getName(), customer.getEmail());
+    public List<CustomerEntity> searchByName(String name) {
+        return jdbcTemplate.query(FIND_CUSTOMER_BY_NAME, customerRowMapper, name);
     }
 
     @Override
-    public CustomerEntity findById(Long id) {
-        String sql = "SELECT * FROM customers WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, customerRowMapper, id);
+    public List<CustomerEntity> searchBySurname(String surname) {
+        return jdbcTemplate.query(FIND_CUSTOMER_BY_SURNAME, customerRowMapper, surname);
     }
 
     @Override
-    public List<CustomerEntity> findAll() {
-        String sql = "SELECT * FROM customers";
-        return jdbcTemplate.query(sql, customerRowMapper);
+    public List<CustomerEntity> searchByEmail(String email) {
+        return jdbcTemplate.query(FIND_CUSTOMER_BY_EMAIL, customerRowMapper, email);
+    }
+
+    @Override
+    public List<CustomerEntity> getAll() {
+        return jdbcTemplate.query(FIND_ALL_CUSTOMERS, customerRowMapper);
+    }
+
+    @Override
+    public Optional<CustomerEntity> getById(Long id) {
+        return jdbcTemplate.query(FIND_BY_ID_SQL, customerRowMapper, id)
+                .stream()
+                .findFirst();
+    }
+
+    @Override
+    public void create(CustomerEntity customer) {
+        jdbcTemplate.update(SAVE_CUSTOMER,
+                customer.getName(),
+                customer.getSurname(),
+                customer.getPatronymic(),
+                customer.getPhone_number(),
+                customer.getCity(),
+                customer.getStreet(),
+                customer.getZip_code(),
+                customer.getEmail(),
+                customer.getPassword(),
+                customer.getPercent(),
+                customer.getId()
+        );
     }
 
     @Override
     public void update(CustomerEntity customer) {
-        String sql = "UPDATE customers SET name = ?, email = ? WHERE id = ?";
-        jdbcTemplate.update(sql, customer.getName(), customer.getEmail(), customer.getId());
+        jdbcTemplate.update(UPDATE_CUSTOMER,
+                customer.getName(),
+                customer.getSurname(),
+                customer.getPatronymic(),
+                customer.getPhone_number(),
+                customer.getCity(),
+                customer.getStreet(),
+                customer.getZip_code(),
+                customer.getEmail(),
+                customer.getPassword(),
+                customer.getPercent(),
+                customer.getId()
+        );
     }
 
     @Override
     public void delete(Long id) {
-        String sql = "DELETE FROM customers WHERE id = ?";
-        jdbcTemplate.update(sql, id);
+        jdbcTemplate.update(DELETE_CUSTOMER, id);
     }
 }
