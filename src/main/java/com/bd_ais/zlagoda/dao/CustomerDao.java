@@ -5,11 +5,9 @@ import com.bd_ais.zlagoda.model.CustomerEntity;
 import java.util.List;
 import java.util.Optional;
 
-public interface CustomerDao{
+public interface CustomerDao extends GenericDao<CustomerEntity, Long> {
 
-    void save(CustomerEntity customer);
-    CustomerEntity findById(Long id);
-    List<CustomerEntity> findAll();
-    void update(CustomerEntity customer);
-    void delete(Long id);
+    List<CustomerEntity> searchByName(String name);
+    List<CustomerEntity> searchBySurname(String surname);
+    List<CustomerEntity> searchByEmail(String email);
 }
