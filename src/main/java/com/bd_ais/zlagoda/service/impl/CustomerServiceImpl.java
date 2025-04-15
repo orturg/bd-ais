@@ -1,12 +1,13 @@
 package com.bd_ais.zlagoda.service.impl;
 
 import com.bd_ais.zlagoda.dao.CustomerDao;
-import com.bd_ais.zlagoda.model.CustomerEntity;
+import com.bd_ais.zlagoda.model.Customer;
 import com.bd_ais.zlagoda.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -19,22 +20,27 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void addCustomer(CustomerEntity customer) {
+    public void addCustomer(Customer customer) {
         customerDaoImpl.create(customer);
     }
 
     @Override
-    public CustomerEntity getCustomerById(Long id) {
+    public Customer getCustomerById(Long id) {
         return customerDaoImpl.getById(id).orElse(null);
     }
 
     @Override
-    public List<CustomerEntity> getAllCustomers() {
+    public Optional<Customer> getCustomerByEmail(String email) {
+        return customerDaoImpl.searchByEmail(email);
+    }
+
+    @Override
+    public List<Customer> getAllCustomers() {
         return customerDaoImpl.getAll();
     }
 
     @Override
-    public void updateCustomer(CustomerEntity customer) {
+    public void updateCustomer(Customer customer) {
         customerDaoImpl.update(customer);
     }
 

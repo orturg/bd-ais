@@ -1,6 +1,6 @@
 package com.bd_ais.zlagoda.controllers;
 
-import com.bd_ais.zlagoda.model.CustomerEntity;
+import com.bd_ais.zlagoda.model.Customer;
 import com.bd_ais.zlagoda.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,10 +36,10 @@ public class CustomerController {
     }
 
     @PostMapping("/{id}/edit")
-    public String editCustomer(@PathVariable Long id, @ModelAttribute CustomerEntity customer) {
-        customer.setId(id); // Ensure the ID is set correctly
-        customerService.updateCustomer(customer); // Update the customer
-        return "redirect:/customers"; // Redirect to the customer list
+    public String editCustomer(@PathVariable Long id, @ModelAttribute Customer customer) {
+        customer.setId(id);
+        customerService.updateCustomer(customer);
+        return "redirect:/customers";
     }
 
 }

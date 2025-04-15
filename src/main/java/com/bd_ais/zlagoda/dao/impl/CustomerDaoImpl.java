@@ -1,7 +1,7 @@
 package com.bd_ais.zlagoda.dao.impl;
 
 import com.bd_ais.zlagoda.dao.CustomerDao;
-import com.bd_ais.zlagoda.model.CustomerEntity;
+import com.bd_ais.zlagoda.model.Customer;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -39,7 +39,7 @@ public class CustomerDaoImpl implements CustomerDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    private final RowMapper<CustomerEntity> customerRowMapper = (rs, rowNum) -> new CustomerEntity(
+    private final RowMapper<Customer> customerRowMapper = (rs, rowNum) -> new Customer(
             rs.getLong("id"),
             rs.getString("name"),
             rs.getString("surname"),
@@ -54,34 +54,36 @@ public class CustomerDaoImpl implements CustomerDao {
     );
 
     @Override
-    public List<CustomerEntity> searchByName(String name) {
+    public List<Customer> searchByName(String name) {
         return jdbcTemplate.query(FIND_CUSTOMER_BY_NAME, customerRowMapper, name);
     }
 
     @Override
-    public List<CustomerEntity> searchBySurname(String surname) {
+    public List<Customer> searchBySurname(String surname) {
         return jdbcTemplate.query(FIND_CUSTOMER_BY_SURNAME, customerRowMapper, surname);
     }
 
     @Override
-    public List<CustomerEntity> searchByEmail(String email) {
-        return jdbcTemplate.query(FIND_CUSTOMER_BY_EMAIL, customerRowMapper, email);
+    public Optional<Customer> searchByEmail(String email) {
+        return jdbcTemplate.query(FIND_CUSTOMER_BY_EMAIL, customerRowMapper, email)
+                .stream()
+                .findFirst();
     }
 
     @Override
-    public List<CustomerEntity> getAll() {
+    public List<Customer> getAll() {
         return jdbcTemplate.query(FIND_ALL_CUSTOMERS, customerRowMapper);
     }
 
     @Override
-    public Optional<CustomerEntity> getById(Long id) {
+    public Optional<Customer> getById(Long id) {
         return jdbcTemplate.query(FIND_BY_ID_SQL, customerRowMapper, id)
                 .stream()
                 .findFirst();
     }
 
     @Override
-    public void create(CustomerEntity customer) {
+    public void create(Customer customer) {
         jdbcTemplate.update(SAVE_CUSTOMER,
                 customer.getName(),
                 customer.getSurname(),
@@ -98,7 +100,7 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public void update(CustomerEntity customer) {
+    public void update(Customer customer) {
         jdbcTemplate.update(UPDATE_CUSTOMER,
                 customer.getName(),
                 customer.getSurname(),
