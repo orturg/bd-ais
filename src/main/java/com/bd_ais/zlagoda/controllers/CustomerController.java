@@ -1,6 +1,6 @@
 package com.bd_ais.zlagoda.controllers;
 
-import com.bd_ais.zlagoda.model.Customer;
+import com.bd_ais.zlagoda.model.CustomerEntity;
 import com.bd_ais.zlagoda.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
