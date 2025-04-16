@@ -2,16 +2,16 @@ package com.bd_ais.zlagoda.model;
 
 import java.util.Objects;
 
-public class ProductEntity {
+public class Product {
     private Long id;
     private String name;
     private String description;
     private Double price;
     private String imageUrl;
 
-    public ProductEntity() {}
+    public Product() {}
 
-    public ProductEntity(Long id, String name, String description, Double price, String imageUrl) {
+    public Product(Long id, String name, String description, Double price, String imageUrl) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -37,8 +37,8 @@ public class ProductEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ProductEntity)) return false;
-        ProductEntity product = (ProductEntity) o;
+        if (!(o instanceof Product)) return false;
+        Product product = (Product) o;
         return Objects.equals(name, product.name) &&
                 Objects.equals(description, product.description) &&
                 Objects.equals(price, product.price) &&

@@ -1,7 +1,7 @@
 package com.bd_ais.zlagoda.dao.impl;
 
 import com.bd_ais.zlagoda.dao.ProductDao;
-import com.bd_ais.zlagoda.model.ProductEntity;
+import com.bd_ais.zlagoda.model.Product;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -31,7 +31,7 @@ public class ProductDaoImpl implements ProductDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    private final RowMapper<ProductEntity> productRowMapper = (rs, rowNum) -> new ProductEntity(
+    private final RowMapper<Product> productRowMapper = (rs, rowNum) -> new Product(
             rs.getLong("id"),
             rs.getString("name"),
             rs.getString("description"),
@@ -40,17 +40,17 @@ public class ProductDaoImpl implements ProductDao {
     );
 
     @Override
-    public List<ProductEntity> getAll() {
+    public List<Product> getAll() {
         return jdbcTemplate.query(FIND_ALL, productRowMapper);
     }
 
     @Override
-    public Optional<ProductEntity> getById(Long id) {
+    public Optional<Product> getById(Long id) {
         return jdbcTemplate.query(FIND_BY_ID, productRowMapper, id).stream().findFirst();
     }
 
     @Override
-    public void create(ProductEntity product) {
+    public void create(Product product) {
         jdbcTemplate.update(SAVE_PRODUCT,
                 product.getName(),
                 product.getDescription(),
@@ -59,7 +59,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public void update(ProductEntity product) {
+    public void update(Product product) {
         jdbcTemplate.update(UPDATE_PRODUCT,
                 product.getName(),
                 product.getDescription(),
@@ -74,7 +74,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public List<ProductEntity> searchByName(String name) {
+    public List<Product> searchByName(String name) {
         return jdbcTemplate.query(FIND_BY_NAME, productRowMapper, name);
     }
 }

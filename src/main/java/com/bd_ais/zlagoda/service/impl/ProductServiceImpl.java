@@ -1,7 +1,7 @@
 package com.bd_ais.zlagoda.service.impl;
 
 import com.bd_ais.zlagoda.dao.ProductDao;
-import com.bd_ais.zlagoda.model.ProductEntity;
+import com.bd_ais.zlagoda.model.Product;
 import com.bd_ais.zlagoda.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,22 +19,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void addProduct(ProductEntity product) {
+    public void addProduct(Product product) {
         productDao.create(product);
     }
 
     @Override
-    public ProductEntity getProductById(Long id) {
+    public Product getProductById(Long id) {
         return productDao.getById(id).orElse(null);
     }
 
     @Override
-    public List<ProductEntity> getAllProducts() {
+    public List<Product> getAllProducts() {
         return productDao.getAll();
     }
 
     @Override
-    public void updateProduct(ProductEntity product) {
+    public void updateProduct(Product product) {
         productDao.update(product);
     }
 

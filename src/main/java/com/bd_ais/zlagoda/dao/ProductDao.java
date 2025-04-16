@@ -1,10 +1,9 @@
 package com.bd_ais.zlagoda.dao;
 
-import com.bd_ais.zlagoda.model.ProductEntity;
+import com.bd_ais.zlagoda.model.Product;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface ProductDao extends GenericDao<ProductEntity, Long> {
-    List<ProductEntity> searchByName(String name);
+public interface ProductDao extends GenericDao<Product, Long> {
+    List<Product> searchByName(String name);
 }
