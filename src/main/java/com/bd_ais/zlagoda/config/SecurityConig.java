@@ -21,12 +21,13 @@ public class SecurityConig {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().anyRequest();
     }
-
     private final CustomUserDetailsService userDetailsService;
 
+    private final CustomSuccessHandler successHandler;
     @Autowired
-    public SecurityConig(CustomUserDetailsService userDetailsService) {
+    public SecurityConig(CustomUserDetailsService userDetailsService, CustomSuccessHandler successHandler) {
         this.userDetailsService = userDetailsService;
+        this.successHandler = successHandler;
     }
 
     @Bean
@@ -34,15 +35,15 @@ public class SecurityConig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/register/**", "/auth").permitAll()
-                        .requestMatchers("/customer/**").hasRole("CUSTOMER")
-                        .requestMatchers("/employee/**").hasRole("EMPLOYEE")
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/manager", "/manager/**").hasRole("MANAGER")
+                        .requestMatchers("/home/**").hasRole("CUSTOMER")
+                        .requestMatchers("/cashier/**").hasRole("CASHIER")
+                        .requestMatchers("/auth/**", "/auth").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/auth")
-                        .defaultSuccessUrl("/shop", true)
+                        .successHandler(successHandler)
                         .permitAll()
                 )
                 .logout(logout -> logout

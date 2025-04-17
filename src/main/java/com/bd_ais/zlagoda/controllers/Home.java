@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 //@RestController
 //@RequestMapping("/home")
 @Controller
+@RequestMapping("/home")
 public class Home {
 
     @GetMapping
@@ -15,8 +16,8 @@ public class Home {
         return "home";
     }
 
-    @GetMapping("/home")
+    @GetMapping("/manager")
     public String getHomePage2() {
-        return "home";
+        return "admin/adminPanel";
     }
 }

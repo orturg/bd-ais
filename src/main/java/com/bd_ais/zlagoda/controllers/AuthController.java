@@ -41,6 +41,7 @@ public class AuthController {
         Optional<Customer> customerOpt = customerService.getCustomerByEmail(request.getEmail());
         System.out.println("Customer found: " + customerOpt.isPresent());
         if (customerOpt.isPresent()) {
+            System.out.println("Success");
             Customer customer = customerOpt.get();
             if (Objects.equals(request.getPassword(), customer.getPassword())) {
                 String token = jwtUtil.generateToken(customer.getEmail(), "CUSTOMER", customer.getId());
