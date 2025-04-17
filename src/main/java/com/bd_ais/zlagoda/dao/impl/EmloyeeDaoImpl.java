@@ -32,7 +32,16 @@ public class EmloyeeDaoImpl implements EmployeeDao {
             "date_of_start = ?, phone_number = ?, city = ?, " +
             "street = ?,  zip_code = ?, email = ?, password = ?" +
             "WHERE id = ?";
-    private final String DELETE_EMPLOYEE = "DELETE FROM employees WHERE id_employee = ?";
+    private final String DELETE_EMPLOYEE =  "DELETE FROM employees " +
+                                            "WHERE id_employee = ?";
+    private final String FILTER_BY_SURNAME = "SELECT * FROM employees ORDER BY emlp_surname";
+    private final String CASHIER_FILTER_BY_SURNAME =    "SELECT * FROM employees \n" +
+                                                        "WHERE emlp_role = 'CASHIER' \n" +
+                                                        "ORDER BY emlp_surname";
+
+    private final String FIND_BY_SURNAME_PHONE_AND_ADDRESS =
+            "SELECT id_employee, empl_name, empl_surname, phone_number, city, street, zip_code " +
+            "FROM employees WHERE emlp_surname = ?";
 
     private final RowMapper<Employee> employeeRowMapper = (rs, rowNum) -> new Employee(
             rs.getLong("id_employee"),
@@ -76,6 +85,21 @@ public class EmloyeeDaoImpl implements EmployeeDao {
     @Override
     public List<Employee> searchByRole(Role role) {
         return jdbcTemplate.query(FIND_BY_ROLE, employeeRowMapper, role.toString());
+    }
+
+    @Override
+    public List<Employee> filterBySurname() {
+        return jdbcTemplate.query(FILTER_BY_SURNAME, employeeRowMapper);
+    }
+
+    @Override
+    public List<Employee> cashierFilterBySurname() {
+        return jdbcTemplate.query(CASHIER_FILTER_BY_SURNAME, employeeRowMapper);
+    }
+
+    @Override
+    public List<Employee> findBySurnamePhoneAndAddress(String surname) {
+        return jdbcTemplate.query(FIND_BY_SURNAME_PHONE_AND_ADDRESS, employeeRowMapper, surname);
     }
 
     @Override

@@ -35,6 +35,18 @@ public class EmployeeController {
         return "employee/addEmployee";
     }
 
+    @GetMapping("/show-sort-by-surname")
+    public String showListEmployeesSortedBySurname(Model model) {
+        model.addAttribute("employees", employeeService.sortBySurname());
+        return "employee/employees";
+    }
+
+    @GetMapping("/show-sort-cashier-by-surname")
+    public String showListCashiersSortedBySurname(Model model) {
+        model.addAttribute("employees", employeeService.sortCashierBySurname());
+        return "employee/employees";
+    }
+
     @PostMapping("/add-employee")
     public String addEmployee(@Valid @ModelAttribute EmployeeDTO employeedto,
                               BindingResult result) {

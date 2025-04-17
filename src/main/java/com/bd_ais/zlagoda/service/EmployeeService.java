@@ -10,4 +10,8 @@ public interface EmployeeService {
     List<Employee> getAllEmployees();
     void updateEmployee(Employee employee);
     void deleteEmployee(Long id);
+
+    List<Employee> sortBySurname();
+    List<Employee> sortCashierBySurname();
+    List<Employee> findPhoneAndAddressBySurname(String surname);
 }

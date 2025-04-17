@@ -10,4 +10,4 @@ public interface CustomerDao extends GenericDao<Customer, Long> {
     List<Customer> searchByName(String name);
     List<Customer> searchBySurname(String surname);
     Optional<Customer> searchByEmail(String email);
-}
+    }

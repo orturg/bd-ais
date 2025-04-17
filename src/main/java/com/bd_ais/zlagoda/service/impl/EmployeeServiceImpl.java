@@ -41,4 +41,19 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void deleteEmployee(Long id) {
         employeeDaoImpl.delete(id);
     }
+
+    @Override
+    public List<Employee> sortBySurname() {
+        return employeeDaoImpl.filterBySurname();
+    }
+
+    @Override
+    public List<Employee> sortCashierBySurname() {
+        return employeeDaoImpl.cashierFilterBySurname();
+    }
+
+    @Override
+    public List<Employee> findPhoneAndAddressBySurname(String surname) {
+        return employeeDaoImpl.findBySurnamePhoneAndAddress(surname);
+    }
 }
