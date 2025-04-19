@@ -1,38 +1,42 @@
 package com.bd_ais.zlagoda.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Objects;
 
+@Getter
+@Setter
 public class Product {
     private Long id;
     private String name;
     private String description;
     private Double price;
     private String imageUrl;
+    private String producer;
 
     public Product() {}
 
-    public Product(Long id, String name, String description, Double price, String imageUrl) {
+    public Product(Long id, String name, String description, Double price, String imageUrl, String producer) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.imageUrl = imageUrl;
+        this.producer = producer;
     }
 
-    public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
-    public Double getPrice() { return price; }
     public void setPrice(Double price) { this.price = price; }
 
-    public String getImageUrl() { return imageUrl; }
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+
+    public void setProducer(String producer) { this.producer = producer; }
 
     @Override
     public boolean equals(Object o) {
@@ -42,7 +46,8 @@ public class Product {
         return Objects.equals(name, product.name) &&
                 Objects.equals(description, product.description) &&
                 Objects.equals(price, product.price) &&
-                Objects.equals(imageUrl, product.imageUrl);
+                Objects.equals(imageUrl, product.imageUrl) &&
+                Objects.equals(producer, product.producer);
     }
 
     @Override

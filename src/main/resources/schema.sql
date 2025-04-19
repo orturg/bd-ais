@@ -48,3 +48,20 @@ INSERT INTO employees (emlp_name, emlp_surname, emlp_patronymic, emlp_role,
                                                               ('Robert', 'Brown', 'James', 'CASHIER', 45000.00, '1988-11-10', '2019-09-01', '+1122334455', 'Chicago', 'Michigan Ave 789', '60601', 'robert.brown@example.com', 'hashed_password3'),
                                                               ('Emily', 'Davis', 'Grace', 'CASHIER', 55000.00, '1982-07-08', '2018-03-20', '+1223344556', 'Houston', 'Main Street 321', '77001', 'emily.davis@example.com', 'hashed_password4'),
                                                               ('Michael', 'Wilson', 'Lee', 'MANAGER', 42000.00, '1995-01-15', '2022-07-10', '+1334455667', 'Phoenix', 'Camelback Rd 147', '85001', 'michael.wilson@example.com', 'hashed_password5');
+
+
+CREATE TABLE products (
+                          id SERIAL PRIMARY KEY,
+                          name VARCHAR(100) NOT NULL,
+                          description TEXT,
+                          price DECIMAL(10, 2) CHECK (price >= 0) NOT NULL,
+                          image_url VARCHAR(255),
+                          producer VARCHAR(100) NOT NULL
+);
+
+INSERT INTO products (name, description, price, image_url, producer) VALUES
+                                                                         ('iPhone 14', 'Latest Apple smartphone with A15 Bionic chip', 999.99, 'https://example.com/images/iphone14.jpg', 'Apple'),
+                                                                         ('Samsung Galaxy S23', 'High-end Android smartphone with excellent camera', 899.50, 'https://example.com/images/galaxy-s23.jpg', 'Samsung'),
+                                                                         ('Sony WH-1000XM5', 'Noise-canceling wireless headphones', 349.99, 'https://example.com/images/sony-wh1000xm5.jpg', 'Sony'),
+                                                                         ('MacBook Pro 16"', 'Powerful laptop for professionals', 2499.00, 'https://example.com/images/macbook-pro.jpg', 'Apple'),
+                                                                         ('Logitech MX Master 3S', 'Advanced wireless mouse for productivity', 99.90, 'https://example.com/images/mx-master-3s.jpg', 'Logitech');

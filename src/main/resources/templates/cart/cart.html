@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>КОшик</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        img {
+            max-height: 100px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Кошик</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Назва</th>
+        <th>Опис</th>
+        <th>Ціна</th>
+        <th>Зображення</th>
+        <th>Виробник</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${products}">
+        <td th:text="${product.name}">Назва</td>
+        <td th:text="${product.description}">Опис</td>
+        <td th:text="${product.price}">Ціна</td>
+        <td><img th:src="${product.imageUrl}" alt="Image"/></td>
+        <td th:text="${product.producer}">Виробник</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
